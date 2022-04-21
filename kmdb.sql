@@ -103,6 +103,7 @@
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS characters;
+DROP TABLE IF EXISTS studios;
 
 -- Create new tables, according to your domain model
 
@@ -111,7 +112,7 @@ CREATE TABLE movies (
   title TEXT,
   mpaa TEXT,
   year INTEGER,
-  studio TEXT
+  studio_id INTEGER
 );
 
 CREATE TABLE actors (
@@ -125,6 +126,12 @@ CREATE TABLE characters (
   cast_id INTEGER,
   char_name TEXT
 );
+
+CREATE TABLE studios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  movie_id INTEGER,
+  studio_name TEXT
+);
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 
@@ -132,26 +139,27 @@ INSERT INTO movies (
   title,
   mpaa,
   year,
-  studio 
+  studio_id 
 )
 VALUES (
   "Batman Begins",
   "PG-13",
   2005,
-  "Warner Bros."
+  1
 ),
 (
   "The Dark Knight",
   "PG-13",
   2008,
-  "Warner Bros."
+  1
 ),
 (
   "The Dark Knight Rises",
   "PG-13",
   2012,
-  "Warner Bros."
+  1
 );
+
 
 INSERT INTO actors (
   act_name
@@ -270,21 +278,39 @@ VALUES (
   11,
   "Selina Kyle"
 );
+
+INSERT INTO studios (
+  movie_id,
+  studio_name
+)
+VALUES (
+  1,
+  "Warner Bros."
+),
+(
+  2,
+  "Warner Bros."
+),
+(
+  3,
+  "Warner Bros."
+);
+
 -- Prints a header for the movies output
 .print "Movies"
 .print "======"
 .print ""
 
 -- The SQL statement for the movies output
-SELECT title, year, mpaa, studio
-FROM movies; 
+SELECT movies.title, movies.year, movies.mpaa, studios.studio_name
+FROM movies
+INNER JOIN studios on movies.studio_id = studios.id; 
 
 -- Prints a header for the cast output
 .print ""
 .print "Top Cast"
 .print "========"
 .print ""
-
 
 -- The SQL statement for the cast output
 SELECT movies.title, actors.act_name, characters.char_name 
