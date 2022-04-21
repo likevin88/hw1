@@ -183,7 +183,7 @@ VALUES (
   "Heath Ledger"
 ),
 (
-  "Aaron eckhart"
+  "Aaron Eckhart"
 ),
 (
   "Maggie Gyllenhaal"
